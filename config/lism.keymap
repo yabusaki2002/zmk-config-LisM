@@ -1,40 +1,122 @@
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 200
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-#include <dt-bindings/zmk/mouse.h>
 
 &mt {
-    tapping-term-ms = <300>;
     flavor = "balanced";
+    quick-tap-ms = <0>;
+    tapping-term-ms = <120>;
 };
-
-&lt {
-    quick-tap-ms = <300>;
-};
-
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        tofunctionLayer {
+            bindings = <&mo 1>;
+            key-positions = <10 20>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <125>;
+            slow-release;
+            layers = <0>;
+        };
+
+        blt_setting {
+            bindings = <&mo 6>;
+            key-positions = <14 24>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <150>;
+            slow-release;
+            layers = <0>;
+        };
+
+        ime_toggle {
+            bindings = <&kp LC(SPACE)>;
+            key-positions = <10 35>;
+            timeout-ms = <300>;
+            require-prior-idle-ms = <50>;
+            layers = <0>;
+        };
+
+        tmux_pre {
+            bindings = <&kp LC(G)>;
+            key-positions = <10 14>;
+            timeout-ms = <200>;
+            require-prior-idle-ms = <125>;
+            layers = <0>;
+        };
+
+        alt-tab {
+            bindings = <&cmd_tab_hold>;
+            key-positions = <0 34>;
+            timeout-ms = <300>;
+            require-prior-idle-ms = <400>;
+            layers = <0>;
+            slow-release;
+        };
+
+        ctrl-tab {
+            bindings = <&ctrl_tab_hold>;
+            key-positions = <22 34>;
+            timeout-ms = <300>;
+            require-prior-idle-ms = <200>;
+            layers = <0>;
+            slow-release;
+        };
+    };
+
     macros {
-        emoji: emoji_macro {
+        to_layer_0: to_layer_0 {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&to 1 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
+            label = "TO_LAYER_0";
+        };
+
+        cmd_tab_hold: cmd_tab_hold {
             compatible = "zmk,behavior-macro";
-            label = "EMOJI";
             #binding-cells = <0>;
-            bindings = 
-                <&macro_press &kp CAPSLOCK>,
-                <&macro_tap &kp E>,
-                <&macro_release &kp CAPSLOCK>;
+            bindings =
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp TAB>,
+                <&macro_press>,
+                <&mo 7>,
+                <&macro_pause_for_release>,
+                <&macro_release>,
+                <&mo 7>,
+                <&macro_release>,
+                <&kp LGUI>;
+        };
+
+        ctrl_tab_hold: ctrl_tab_hold {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LCTRL>,
+                <&macro_tap>,
+                <&kp TAB>,
+                <&macro_press>,
+                <&mo 8>,
+                <&macro_pause_for_release>,
+                <&macro_release>,
+                <&mo 8>,
+                <&macro_release>,
+                <&kp LCTRL>;
         };
     };
 
     behaviors {
-        encoder_msc: sensor_rotate_msc {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-            tap-ms = <20>;
+        lt_to_layer_0: lt_to_layer_0 {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LAYER_TAP_TO_0";
+            bindings = <&mo>, <&to_layer_0>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
         };
 
         encoder_kp: sensor_rotate_kp {
@@ -48,89 +130,95 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "Default Layer";
+            display-name = "Default";
             bindings = <
-                &kp Q            &kp W              &kp E                 &kp R                   &kp T                                                  &kp Y        &kp U            &kp I              &kp O               &kp P
-                &kp A            &mt LALT S         &mt LSHIFT D          &mt LGUI F              &mt LCTRL G                                            &mt RCTRL H  &mt RGUI J       &mt RSHIFT K       &mt RALT L          &lt 3 SEMICOLON
-                &kp Z            &kp X              &kp C                 &kp V                   &kp B                                                  &kp N        &kp M            &kp COMMA          &kp DOT             &kp SLASH
-                &lt 4 DELETE     &tog 1             &lt 1 TAB             &kp LS(LG(N4))          &lt 2 SPACE       &lt 3 ESC           &lt 3 BACKSPACE  &lt 2 ENTER  &kp LS(LG(N4))   &kp F7             &kp F10             &lt 4 F12 
+                &kp Q             &kp W         &kp E         &kp R         &kp T                                                   &kp Y           &kp U           &kp I           &kp O           &kp P
+                &mt LCTRL A       &kp S         &kp D         &kp F         &kp G                                                   &kp H           &kp J           &kp K           &kp L           &kp SEMICOLON
+                &mt LSHIFT Z      &kp X         &kp C         &kp V         &kp B                                                   &kp N           &kp M           &kp COMMA       &kp DOT         &kp SLASH
+                &kp LSHIFT        &kp LALT      &kp LCTRL     &kp LGUI      &lt 2 ESC     &kp SPACE           &lt 3 ENTER  &kp BSPC &kp TAB         &kp MINUS       &kp F12         &mo 3
             >;
-            sensor-bindings = <&encoder_msc SCRL_DOWN SCRL_UP>;
+            sensor-bindings = <&encoder_kp PAGE_UP PAGE_DOWN>;
         };
 
-        layer_1 {
-            display-name = "Mouse Layer";
+        FUNCTION {
+            display-name = "Function";
             bindings = <
-                &trans           &trans             &trans                &trans                  &trans                                                 &kp SPACE    &kp RG(LEFT)     &kp RG(RIGHT)      &mkp MB3            &trans
-                &mkp MB5         &trans             &trans                &trans                  &trans                                                 &kp LG(UP)   &mkp MB1         &mkp MB2           &msc SCRL_UP        &msc SCRL_DOWN
-                &mkp MB4         &trans             &trans                &trans                  &trans                                                 &kp LG(DOWN) &kp LEFT         &kp UP             &kp RIGHT           &trans
-                &trans           &trans             &trans                &trans                  &trans            &trans              &trans           &trans       &trans           &kp DOWN           &trans              &kp LG(W)
-            >;
-        };
-
-        layer_2 {
-            display-name = "Number Layer";
-            bindings = <
-                &trans           &kp NUMBER_7       &kp NUMBER_8          &kp NUMBER_9            &kp EQUAL                                              &kp F1       &kp F2           &kp F7             &kp F10             &kp RSHIFT
-                &kp ASTERISK     &mt LALT NUMBER_4  &mt LSHIFT NUMBER_5   &mt LGUI NUMBER_6       &mt LCTRL MINUS                                        &mkp MB1     &kp LEFT         &kp UP             &kp RIGHT           &kp RGUI
-                &kp SLASH        &kp NUMBER_1       &kp NUMBER_2          &kp NUMBER_3            &kp PLUS                                               &mkp MB2     &none            &kp DOWN           &none               &kp RALT
-                &trans           &kp DOT            &kp NUMBER_0          &trans                  &kp LANG2         &trans              &trans           &kp LANG1    &trans           &kp RS(RC(TAB))    &kp RC(TAB)         &kp F12 
-            >;
-            sensor-bindings = <&encoder_kp C_VOL_UP C_VOL_DN>;
-        };
-
-        layer_3 {
-            display-name = "Mark Layer";
-            bindings = <
-                &kp LS(LG(N4))   &kp F4             &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS   &none                                                  &kp TILDE    &kp EXCLAMATION  &kp AT_SIGN        &kp HASH            &kp DOLLAR
-                &emoji           &kp F5             &kp LEFT_BRACKET      &kp RIGHT_BRACKET       &none                                                  &kp GRAVE    &kp UNDER        &kp SINGLE_QUOTE   &kp DOUBLE_QUOTES   &kp BACKSLASH
-                &kp KP_NUMLOCK   &kp F11            &kp LEFT_BRACE        &kp RIGHT_BRACE         &none                                                  &kp PIPE     &kp PERCENT      &kp CARET          &kp AMPERSAND       &kp ASTERISK
-                &trans           &trans             &kp NUMBER_0          &trans                  &kp SPACE         &trans              &trans           &kp ENTER    &trans           &none              &none               &kp F12 
+                &trans            &trans        &trans        &trans        &trans                                                  &kp F1          &kp F2          &kp F3          &kp F4          &kp F5
+                &trans            &trans        &trans        &trans        &trans                                                  &kp F6          &kp F7          &kp F8          &kp F9          &kp F10
+                &trans            &trans        &trans        &trans        &trans                                                  &kp F11         &kp F12         &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans        &trans              &trans       &trans   &trans          &trans          &trans          &trans
             >;
         };
 
-        layer_4 {
-            display-name = "Device Layer";
+        symbol {
+            display-name = "Symbol";
             bindings = <
-                &none            &none              &none                 &none                   &bt BT_CLR                                             &bt BT_SEL 0 &bt BT_SEL 1     &bt BT_SEL 2       &bt BT_SEL 3        &bt BT_SEL 4
-                &none            &none              &none                 &none                   &none                                                  &none        &none            &none              &none               &none
-                &sys_reset       &none              &none                 &none                   &none                                                  &none        &none            &none              &none               &sys_reset
-                &bootloader      &bt BT_CLR_ALL     &none                 &none                   &none             &none               &studio_unlock   &none        &none            &none              &none               &bootloader
+                &kp GRAVE         &kp EQUAL     &kp UP        &kp PLUS      &none                                                   &kp CARET       &kp AMPERSAND   &kp ASTERISK    &kp LPAR        &kp RPAR
+                &kp LC(A)         &kp LEFT      &kp DOWN      &kp RIGHT     &kp LC(E)                                               &kp EXCL        &kp AT          &kp LC(K)       &kp LBKT        &kp RBKT
+                &kp LSHIFT        &none         &kp LC(TAB)   &kp LA(TAB)   &none                                                   &kp DLLR        &kp SQT         &kp DQT         &kp LBRC        &kp RBRC
+                &kp LSHIFT        &trans        &trans        &kp LGUI      &trans        &trans              &kp LG(SPACE) &kp RGUI &trans         &kp HASH        &kp MINUS       &kp PERCENT
             >;
         };
 
-        layer_5 {
-            status = "reserved";
-            display-name = "Brank Layer";
+        num {
+            display-name = "Number";
             bindings = <
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans            &trans              &trans           &trans       &trans           &trans             &trans              &trans
+                &none             &kp N7        &kp N8        &kp N9        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &none             &kp N4        &kp N5        &kp N6        &none                                                   &trans          &trans          &trans          &trans          &trans
+                &none             &kp N1        &kp N2        &kp N3        &kp N0                                                  &trans          &trans          &kp COMMA       &kp DOT         &trans
+                &trans            &trans        &trans        &trans        &trans        &kp SPACE           &kp ENTER    &kp BSPC &trans          &trans          &trans          &trans
+            >;
+            sensor-bindings = <&encoder_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
+        };
+
+        MOUSE {
+            display-name = "Mouse";
+            bindings = <
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &mkp MB1        &mkp MB3        &mkp MB2        &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &mkp MB4        &trans          &mkp MB5        &trans
+                &trans            &trans        &trans        &trans        &lt 5 ESC     &trans              &trans       &trans   &trans          &trans          &trans          &trans
+            >;
+        };
+
+        SCROLL {
+            display-name = "Scroll";
+            bindings = <
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans        &trans              &trans       &trans   &trans          &trans          &trans          &trans
             >;
         };
 
         layer_6 {
-            status = "reserved";
-            display-name = "Brank Layer";
+            display-name = "BT";
             bindings = <
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans            &trans              &trans           &trans       &trans           &trans             &trans              &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &kp N1        &kp N2        &kp N3        &trans                                                  &trans          &trans          &trans          &trans          &bt BT_CLR
+                &trans            &trans        &trans        &trans        &trans        &trans              &bootloader  &trans   &trans          &trans          &trans          &bt BT_CLR_ALL
             >;
         };
 
-        layer_7 {
-            status = "reserved";
-            display-name = "Brank Layer";
+        cmd_tab_layer {
+            display-name = "Cmd+Tab";
             bindings = <
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans                                                 &trans       &trans           &trans             &trans              &trans
-                &trans           &trans             &trans                &trans                  &trans            &trans              &trans           &trans       &trans           &trans             &trans              &trans
+                &kp TAB           &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans        &trans              &trans       &trans   &trans          &trans          &trans          &trans
+            >;
+        };
+
+        ctrl_tab_layer {
+            display-name = "Ctrl+Tab";
+            bindings = <
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &kp TAB       &trans        &trans                                                  &trans          &trans          &trans          &trans          &trans
+                &trans            &trans        &trans        &trans        &trans        &trans              &trans       &trans   &trans          &trans          &trans          &trans
             >;
         };
     };
-
 };
