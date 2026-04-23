@@ -397,9 +397,6 @@ combos:
 - p: [10, 35]
   k: Ctl+SPACE
   l: [Default]
-- p: [10, 14]
-  k: Ctl+G
-  l: [Default]
 - p: [0, 34]
   k: '&cmd_tab_hold'
   l: [Default]
