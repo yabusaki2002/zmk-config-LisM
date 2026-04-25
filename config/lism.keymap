@@ -129,6 +129,12 @@
                 <&macro_release>,
                 <&kp LCTRL>;
         };
+
+        exit_mouse_space: exit_mouse_space {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp SPACE>, <&to 0>;
+        };
     };
 
     behaviors {
@@ -210,10 +216,10 @@
         MOUSE {
             display-name = "Mouse";
             bindings = <
-&trans  &trans  &trans  &trans  &trans                       &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans                       &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans                       &trans  &mkp MB4  &trans    &mkp MB5  &trans
-&trans  &trans  &trans  &trans  &lt 5 ESC  &trans    &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans                                  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans                                  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans                                  &trans  &mkp MB4  &trans    &mkp MB5  &trans
+&trans  &trans  &trans  &trans  &lt 5 ESC  &exit_mouse_space    &trans  &trans  &trans    &trans    &trans    &trans
             >;
         };
 
