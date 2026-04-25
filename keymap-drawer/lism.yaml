@@ -403,3 +403,6 @@ combos:
 - p: [22, 34]
   k: '&ctrl_tab_hold'
   l: [Default]
+- p: [11, 12]
+  k: TAB
+  l: [Default]
