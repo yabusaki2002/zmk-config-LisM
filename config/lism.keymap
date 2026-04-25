@@ -63,11 +63,11 @@
             layers = <0>;
         };
 
-        alt-tab {
+        cmd-tab {
             bindings = <&cmd_tab_hold>;
-            key-positions = <0 34>;
+            key-positions = <21 34>;
             timeout-ms = <300>;
-            require-prior-idle-ms = <400>;
+            require-prior-idle-ms = <200>;
             layers = <0>;
             slow-release;
         };
@@ -240,10 +240,10 @@
         cmd_tab_layer {
             display-name = "Cmd+Tab";
             bindings = <
-&kp TAB  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans   &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans   &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans   &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans   &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans   &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &kp TAB  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+&trans  &trans   &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
