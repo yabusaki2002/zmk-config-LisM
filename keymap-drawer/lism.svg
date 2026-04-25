@@ -332,18 +332,36 @@ path.combo { stroke: #7f7f7f; }
 </text>
 </g>
 <g class="combo combopos-3">
+<path d="M84,56 l-39,20" class="combo"/>
+<path d="M84,56 l39,-20" class="combo"/>
+<rect rx="6" ry="6" x="70" y="43" width="28" height="26" class="combo"/>
+<text x="84" y="56" class="combo tap">Ctl+E</text>
+</g>
+<g class="combo combopos-4">
+<path d="M112,84 l-65,0" class="combo"/>
+<path d="M112,84 l65,0" class="combo"/>
+<rect rx="6" ry="6" x="98" y="71" width="28" height="26" class="combo"/>
+<text x="112" y="84" class="combo tap">Ctl+F</text>
+</g>
+<g class="combo combopos-5">
+<path d="M140,84 l-93,0" class="combo"/>
+<path d="M140,84 l93,0" class="combo"/>
+<rect rx="6" ry="6" x="126" y="71" width="28" height="26" class="combo"/>
+<text x="140" y="84" class="combo tap">Ctl+G</text>
+</g>
+<g class="combo combopos-6">
 <path d="M140,112 l-97,-73" class="combo"/>
 <path d="M140,112 l97,73" class="combo"/>
 <rect rx="6" ry="6" x="126" y="99" width="28" height="26" class="combo"/>
 <text x="140" y="112" class="combo tap"><tspan style="font-size: 64%">&amp;cmd_tab_h…</tspan></text>
 </g>
-<g class="combo combopos-4">
+<g class="combo combopos-7">
 <path d="M196,168 l-39,-20" class="combo"/>
 <path d="M196,168 l39,20" class="combo"/>
 <rect rx="6" ry="6" x="182" y="155" width="28" height="26" class="combo"/>
 <text x="196" y="168" class="combo tap"><tspan style="font-size: 64%">&amp;ctrl_tab_…</tspan></text>
 </g>
-<g class="combo combopos-5">
+<g class="combo combopos-8">
 <rect rx="6" ry="6" x="98" y="71" width="28" height="26" class="combo"/>
 <text x="112" y="84" class="combo tap">TAB</text>
 </g>
