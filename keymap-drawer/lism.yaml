@@ -318,12 +318,12 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - Sft+TAB
   - TAB
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -406,8 +406,11 @@ combos:
 - p: [10, 14]
   k: Ctl+G
   l: [Default]
-- p: [21, 34]
+- p: [17, 34]
   k: '&cmd_tab_hold'
+  l: [Default]
+- p: [16, 34]
+  k: '&cmd_shift_tab_hold'
   l: [Default]
 - p: [22, 34]
   k: '&ctrl_tab_hold'
