@@ -65,7 +65,16 @@
 
         cmd-tab {
             bindings = <&cmd_tab_hold>;
-            key-positions = <21 34>;
+            key-positions = <17 34>;
+            timeout-ms = <300>;
+            require-prior-idle-ms = <200>;
+            layers = <0>;
+            slow-release;
+        };
+
+        cmd-shift-tab {
+            bindings = <&cmd_shift_tab_hold>;
+            key-positions = <16 34>;
             timeout-ms = <300>;
             require-prior-idle-ms = <200>;
             layers = <0>;
@@ -104,6 +113,27 @@
                 <&kp LGUI>,
                 <&macro_tap>,
                 <&kp TAB>,
+                <&macro_press>,
+                <&mo 7>,
+                <&macro_pause_for_release>,
+                <&macro_release>,
+                <&mo 7>,
+                <&macro_release>,
+                <&kp LGUI>;
+        };
+
+        cmd_shift_tab_hold: cmd_shift_tab_hold {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_press>,
+                <&kp LSHIFT>,
+                <&macro_tap>,
+                <&kp TAB>,
+                <&macro_release>,
+                <&kp LSHIFT>,
                 <&macro_press>,
                 <&mo 7>,
                 <&macro_pause_for_release>,
@@ -246,10 +276,10 @@
         cmd_tab_layer {
             display-name = "Cmd+Tab";
             bindings = <
-&trans  &trans   &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans   &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &kp TAB  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-&trans  &trans   &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans          &trans   &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &kp LS(TAB)     &kp TAB  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans          &trans   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans          &trans   &trans  &trans
             >;
         };
 
